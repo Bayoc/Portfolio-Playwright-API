@@ -91,7 +91,7 @@ test.describe('Login API', () => {
         expect(deleteBody.responseCode).toBe(200);
     });
 
-    /*  test.only('CLEANUP - delete test user', async ({ request }) => {
+    test.only('CLEANUP - delete test user', async ({ request }) => {
       const deleteResponse = await request.delete('/api/deleteAccount', {
           form: {
               email: 'baio@test.com',
@@ -101,6 +101,6 @@ test.describe('Login API', () => {
 
       const deleteBody = await deleteResponse.json();
       console.log(deleteBody);
-  }); */
+  }); 
 
 });
