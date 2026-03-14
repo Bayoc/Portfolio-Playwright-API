@@ -11,6 +11,8 @@ for (const envVar of requiredEnvVars) {
 export const ENV = {
     email: process.env.TEST_USER_EMAIL as string,
     password: process.env.TEST_USER_PASSWORD as string,
+    registerEmail: process.env.TEST_REGISTER_EMAIL as string,
+    registerPassword: process.env.TEST_REGISTER_PASSWORD as string,
 };
 
 export default defineConfig({
