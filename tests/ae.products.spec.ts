@@ -49,4 +49,28 @@ test.describe('Products API', () => {
         expect(body.products[0].name).toContain('Blue Top');
     });
 
+    test('PUT To All Brands List - should return 405 Method Not Allowed', async ({ request }) => {
+        const response = await request.put('/api/brandsList');
+
+        expect(response.status()).toBe(200);
+
+        const body = await response.json();
+        expect(body.responseCode).toBe(405);
+        expect(body.message).toBe('This request method is not supported.');
+    });
+
+    test('POST Search Product without search_product parameter', async ({ request }) => {
+        const response = await request.post('/api/searchProduct', {
+                // intentional missing parameter    
+        });
+
+        expect(response.status()).toBe(200);
+
+        const body = await response.json();
+        expect(body.responseCode).toBe(400);
+        expect(body.message).toBe('Bad request, search_product parameter is missing in POST request.');
+    });
+
+    
+
 });

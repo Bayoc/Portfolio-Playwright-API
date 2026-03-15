@@ -103,4 +103,61 @@ test.describe('Login API', () => {
       console.log(deleteBody);
   }); */
 
+    test('DELETE To Verify Login - should return 405 Method Not Allowed', async ({ request }) => {
+        const response = await request.delete('/api/verifyLogin');
+
+        expect(response.status()).toBe(200);
+
+        const body = await response.json();
+        expect(body.responseCode).toBe(405);
+        expect(body.message).toBe('This request method is not supported.');
+    });
+
+    test('PUT Update User Account - User data should be updated', async ({ request }) => {
+        const user: UserAccount = {
+            name: 'baio',
+            email: ENV.email,
+            password: ENV.password,
+            title: 'Mr',
+            birth_date: '1',
+            birth_month: '1',
+            birth_year: '1991',
+            firstname: 'baioc2',
+            lastname: 'srajoc',
+            company: 'firma',
+            address1: 'address 1',
+            address2: 'address 2',
+            country: 'Canada',
+            zipcode: "12345",
+            state: 'statiwo',
+            city: 'makarena',
+            mobile_number: '4234234'
+        };
+
+        const response = await request.put('/api/updateAccount', {
+            form: user as Record<string, string>
+        });
+
+        expect(response.status()).toBe(200);
+
+        const body = await response.json();
+        expect(body.responseCode).toBe(200);
+        expect(body.message).toBe('User updated!');
+    });
+
+    test('GET User Account Detail By Email - should return user deteal', async ({ request }) => {
+        const response = await request.get('/api/getUserDetailByEmail', {
+            params: {
+                email: ENV.email
+            }
+        });
+
+        expect(response.status()).toBe(200);
+
+        const body = await response.json();
+        expect(body.responseCode).toBe(200);
+        expect(body.user).toBeDefined();
+        expect(body.user.email).toBe(ENV.email);
+    });
+
 });
