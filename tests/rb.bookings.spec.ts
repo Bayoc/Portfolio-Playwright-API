@@ -1,0 +1,158 @@
+import { test, expect, RB_URL } from './fixtures';
+
+test.describe('Restful Booker Api', () => {
+    test('GET HealthCheck - should return 201', async ({ request }) => {
+        const response = await request.get('https://restful-booker.herokuapp.com/ping');
+
+        expect(response.status()).toBe(201);
+    });
+
+    test('POST CreateToken - should return auth token', async ({ request }) => {
+        const response = await request.post('https://restful-booker.herokuapp.com/auth', {
+
+            data: {
+                username: "admin",
+                password: "password123"
+            }
+
+        });
+
+        expect(response.status()).toBe(200);
+
+        const body = await response.json();
+        expect(body.token).toBeDefined();
+    });
+
+    test('GET BookingIds - should return list of bookings', async ({ request }) => {
+
+        const response = await request.get(`${RB_URL}/booking`);
+
+        expect(response.status()).toBe(200);
+
+        const body = await response.json();
+        expect(body.length).toBeGreaterThan(0);
+        expect(body[0].bookingid).toBeDefined();
+    });
+
+    test('GET Booking - should return booking data', async ({ request }) => {
+
+        const idsResponse = await request.get(`${RB_URL}/booking`);
+        const ids = await idsResponse.json();
+        const firstId = ids[0].bookingid;
+
+        const response = await request.get(`${RB_URL}/booking/${firstId}`);
+
+        expect(response.status()).toBe(200);
+
+        const body = await response.json();
+        expect(body).toHaveProperty('firstname');
+        expect(body).toHaveProperty('lastname');
+        expect(body).toHaveProperty('totalprice');
+        expect(body).toHaveProperty('depositpaid');
+        expect(body).toHaveProperty('bookingdates');
+    });
+
+    test('POST CreateBooking - should create booking', async ({ request }) => {
+
+        const response = await request.post(`${RB_URL}/booking`, {
+            data: {
+                firstname: 'Baio',
+                lastname: 'ForUpdate',
+                totalprice: 999,
+                depositpaid: true,
+                bookingdates: {
+                    checkin: '2026-02-01',
+                    checkout: '2026-02-12'
+                },
+                additionalneeds: 'none'
+            }
+        });
+
+
+        expect(response.status()).toBe(200);
+
+        const body = await response.json();
+        expect(body).toHaveProperty('bookingid');
+        expect(body.booking).toHaveProperty('firstname');
+        expect(body.booking).toHaveProperty('lastname');
+        expect(body.booking).toHaveProperty('totalprice');
+        console.log(body);
+    });
+
+    test('PUT Update Booking - should update booking', async ({ request, rbToken }) => {
+
+        const createResponse = await request.post(`${RB_URL}/booking`, {
+            data: {
+                firstname: 'Baio',
+                lastname: 'ForUpdate',
+                totalprice: 999,
+                depositpaid: true,
+                bookingdates: {
+                    checkin: '2026-02-01',
+                    checkout: '2026-02-12'
+                },
+                additionalneeds: 'none'
+            }
+        });
+        const createBody = await createResponse.json();
+        const bookingId = createBody.bookingid;
+
+        const response = await request.put(`${RB_URL}/booking/${bookingId}`, {
+            headers: {
+                'Cookie': `token=${rbToken}`,
+                'Authorization': 'Basic YWRtaW46cGFzc3dvcmQxMjM=',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+
+            },
+            data: {
+                firstname: 'Baio',
+                lastname: 'Updated3',
+                totalprice: 999,
+                depositpaid: true,
+                bookingdates: {
+                    checkin: '2026-02-01',
+                    checkout: '2026-02-12'
+                },
+                additionalneeds: 'none'
+            }
+        });
+        expect(response.status()).toBe(200);
+
+        const body = await response.json();
+
+        expect(body).toHaveProperty('firstname');
+        expect(body).toHaveProperty('lastname');
+        expect(body).toHaveProperty('totalprice');
+    });
+
+    test('DELETE booking - booking should be deleted', async ({ request, rbToken }) => {
+
+        const createResponse = await request.post(`${RB_URL}/booking`, {
+            data: {
+                firstname: 'Baio',
+                lastname: 'ForDelete',
+                totalprice: 999,
+                depositpaid: true,
+                bookingdates: {
+                    checkin: '2026-02-01',
+                    checkout: '2026-02-12'
+                },
+                additionalneeds: 'none'
+            }
+        });
+        const createBody = await createResponse.json();
+        const bookingId = createBody.bookingid;
+
+        const response = await request.delete(`${RB_URL}/booking/${bookingId}`, {
+            headers: {
+                'Cookie': `token=${rbToken}`,
+                'Authorization': 'Basic YWRtaW46cGFzc3dvcmQxMjM=',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+
+        });
+        expect(response.status()).toBe(201);
+    });
+});
