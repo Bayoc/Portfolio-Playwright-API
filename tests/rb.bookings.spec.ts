@@ -50,7 +50,7 @@ test.describe('Restful Booker Api', () => {
         const response = await request.post(`${RB_URL}/booking`, {
             data: {
                 firstname: 'Baio',
-                lastname: 'ForUpdate',
+                lastname: 'TestLastName',
                 totalprice: 999,
                 depositpaid: true,
                 bookingdates: {

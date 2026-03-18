@@ -50,22 +50,22 @@ test.describe('Login API', () => {
 
     test('POST Register user account with valid credentials', async ({ request }) => {
         const testUser: UserAccount = {
-            name: 'baio',
+            name: 'testname',
             email: ENV.registerEmail,
             password: ENV.registerPassword,
             title: 'Mr',
             birth_date: '1',
             birth_month: '1',
             birth_year: '1991',
-            firstname: 'baioc',
-            lastname: 'srajoc',
-            company: 'firma',
+            firstname: 'testfirstname',
+            lastname: 'testlastname',
+            company: 'company',
             address1: 'address 1',
             address2: 'address 2',
             country: 'Canada',
             zipcode: "12345",
-            state: 'statiwo',
-            city: 'makarena',
+            state: 'teststate',
+            city: 'city',
             mobile_number: '4234234'
         };
 
@@ -104,22 +104,22 @@ test.describe('Login API', () => {
 
     test('PUT Update User Account - User data should be updated', async ({ request }) => {
         const user: UserAccount = {
-            name: 'baio',
+            name: 'testname',
             email: ENV.email,
             password: ENV.password,
             title: 'Mr',
             birth_date: '1',
             birth_month: '1',
             birth_year: '1991',
-            firstname: 'baioc2',
-            lastname: 'srajoc',
-            company: 'firma',
+            firstname: 'testfirstname',
+            lastname: 'testlastname',
+            company: 'company',
             address1: 'address 1',
             address2: 'address 2',
             country: 'Canada',
             zipcode: "12345",
-            state: 'statiwo',
-            city: 'makarena',
+            state: 'teststate',
+            city: 'city',
             mobile_number: '4234234'
         };
 
