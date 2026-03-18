@@ -63,7 +63,6 @@ test.describe('Products API', () => {
         const response = await request.post('/api/searchProduct', {
                 // intentional missing parameter    
         });
-
         expect(response.status()).toBe(200);
 
         const body = await response.json();
