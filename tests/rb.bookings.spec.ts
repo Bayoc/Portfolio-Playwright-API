@@ -5,32 +5,24 @@ import { BookingClient, authHeaders, DEFAULT_BOOKING_DATA } from '../api/rb.book
 test.describe('Restful Booker Api', () => {
     test('GET HealthCheck - should return 201', async ({ request }) => {
         const response = await request.get(`${RB_URL}/ping`)
-
         expect(response.status()).toBe(201);
     });
 
     test('POST CreateToken - should return auth token', async ({ request }) => {
         const response = await request.post(`${RB_URL}/auth`, {
-
             data: {
                 username: "admin",
                 password: "password123"
             }
-
         });
-
         expect(response.status()).toBe(200);
-
         const body = await response.json();
         expect(body.token).toBeDefined();
     });
 
     test('GET BookingIds - should return list of bookings', async ({ request }) => {
-
         const response = await request.get(`${RB_URL}/booking`);
-
         expect(response.status()).toBe(200);
-
         const body = await response.json();
         expect(body.length).toBeGreaterThan(0);
         expect(body[0].bookingid).toBeDefined();
@@ -45,7 +37,6 @@ test.describe('Restful Booker Api', () => {
         const response = await request.get(`${RB_URL}/booking/${firstId}`);
 
         expect(response.status()).toBe(200);
-
         const body = await response.json();
         expect(body).toHaveProperty('firstname');
         expect(body).toHaveProperty('lastname');
@@ -69,10 +60,7 @@ test.describe('Restful Booker Api', () => {
                 additionalneeds: 'none'
             }
         });
-
-
         expect(response.status()).toBe(200);
-
         const body = await response.json();
         expect(body).toHaveProperty('bookingid');
         expect(body.booking).toHaveProperty('firstname');
@@ -84,19 +72,21 @@ test.describe('Restful Booker Api', () => {
         const bookingClient = new BookingClient(request);
         const bookingId = await bookingClient.createBooking();
 
+        const updatedData = {
+            ...DEFAULT_BOOKING_DATA,
+            lastname: 'Updated'
+        };
+
         const response = await request.put(`${RB_URL}/booking/${bookingId}`, {
 
             headers: authHeaders(rbToken),
-            data: DEFAULT_BOOKING_DATA
+            data: updatedData
 
         });
+
         expect(response.status()).toBe(200);
-
         const body = await response.json();
-
-        expect(body).toHaveProperty('firstname');
-        expect(body).toHaveProperty('lastname');
-        expect(body).toHaveProperty('totalprice');
+        expect(body.lastname).toBe('Updated');
     });
 
     test('DELETE booking - booking should be deleted', async ({ request, rbToken }) => {
@@ -108,5 +98,7 @@ test.describe('Restful Booker Api', () => {
 
         });
         expect(response.status()).toBe(201);
+        const verifyResponse = await request.get(`${RB_URL}/booking/${bookingId}`);
+        expect(verifyResponse.status()).toBe(404);
     });
 });

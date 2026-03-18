@@ -91,17 +91,6 @@ test.describe('Login API', () => {
         expect(deleteBody.responseCode).toBe(200);
     });
 
-    /* test.only('CLEANUP - delete test user', async ({ request }) => {
-      const deleteResponse = await request.delete('/api/deleteAccount', {
-          form: {
-              email: 'baio@test.com',
-              password: 'testpassword12#'
-          }
-      });
-
-      const deleteBody = await deleteResponse.json();
-      console.log(deleteBody);
-  }); */
 
     test('DELETE To Verify Login - should return 405 Method Not Allowed', async ({ request }) => {
         const response = await request.delete('/api/verifyLogin');
@@ -145,7 +134,7 @@ test.describe('Login API', () => {
         expect(body.message).toBe('User updated!');
     });
 
-    test('GET User Account Detail By Email - should return user deteal', async ({ request }) => {
+    test('GET User Account Detail By Email - should return user details', async ({ request }) => {
         const response = await request.get('/api/getUserDetailByEmail', {
             params: {
                 email: ENV.email
