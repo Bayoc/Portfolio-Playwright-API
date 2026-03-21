@@ -1,11 +1,13 @@
 import { test, expect, RB_URL } from './fixtures';
 import Ajv from 'ajv';
 import { createBookingSchema, bookingIdsSchema, bookingSchema } from '../api/schemas';
+import { BookingClient, authHeaders, DEFAULT_BOOKING_DATA } from '../api/rb.booking.client';
 
 
 const ajv = new Ajv();
 
 test.describe('Restful Booker - Schema Validation', () => {
+    const validateBooking = ajv.compile(bookingSchema);
 
     test('GET Booking - response matches schema', async ({ request }) => {
         const idsResponse = await request.get(`${RB_URL}/booking`);
@@ -35,17 +37,7 @@ test.describe('Restful Booker - Schema Validation', () => {
     test('POST CreateBooking - response matches schema', async ({ request }) => {
 
         const response = await request.post(`${RB_URL}/booking`, {
-            data: {
-                firstname: 'Baio',
-                lastname: 'TestLastName',
-                totalprice: 999,
-                depositpaid: true,
-                bookingdates: {
-                    checkin: '2026-02-01',
-                    checkout: '2026-02-12'
-                },
-                additionalneeds: 'none'
-            }
+            data: DEFAULT_BOOKING_DATA
         });
 
         const body = await response.json();
@@ -53,4 +45,27 @@ test.describe('Restful Booker - Schema Validation', () => {
         const valid = validate(body);
         expect(valid, JSON.stringify(validate.errors)).toBe(true);
     });
+
+    test('PUT UpdateBooking - response matches schema', async ({ request, rbToken }) => {
+        const bookingClient = new BookingClient(request);
+        const bookingId = await bookingClient.createBooking();
+
+        const updatedData = {
+            ...DEFAULT_BOOKING_DATA,
+            lastname: 'Updated'
+        };
+
+        const response = await request.put(`${RB_URL}/booking/${bookingId}`, {
+
+            headers: authHeaders(rbToken),
+            data: updatedData
+
+        });
+
+        const body = await response.json();
+        const valid = validateBooking(body);
+        expect(valid, JSON.stringify(validateBooking.errors)).toBe(true);
+        expect(body.lastname).toBe('Updated');
+    });
+
 });

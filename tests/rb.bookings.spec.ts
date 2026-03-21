@@ -26,7 +26,6 @@ test.describe('Restful Booker Api', () => {
         const body = await response.json();
         expect(body.length).toBeGreaterThan(0);
         expect(body[0].bookingid).toBeDefined();
-        console.log(body);
     });
 
     test('GET Booking - should return booking data', async ({ request }) => {
@@ -44,7 +43,6 @@ test.describe('Restful Booker Api', () => {
         expect(body).toHaveProperty('totalprice');
         expect(body).toHaveProperty('depositpaid');
         expect(body).toHaveProperty('bookingdates');
-        console.log(body);
     });
 
     test('POST CreateBooking - should create booking', async ({ request }) => {
@@ -71,7 +69,7 @@ test.describe('Restful Booker Api', () => {
         console.log(body);
     });
 
-    test('PUT Update Booking - should update booking', async ({ request, rbToken }) => {
+    test('PUT UpdateBooking - should update booking', async ({ request, rbToken }) => {
         const bookingClient = new BookingClient(request);
         const bookingId = await bookingClient.createBooking();
 
@@ -90,6 +88,7 @@ test.describe('Restful Booker Api', () => {
         expect(response.status()).toBe(200);
         const body = await response.json();
         expect(body.lastname).toBe('Updated');
+        console.log(body);
     });
 
     test('DELETE booking - booking should be deleted', async ({ request, rbToken }) => {
