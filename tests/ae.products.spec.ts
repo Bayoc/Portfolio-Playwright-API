@@ -26,6 +26,7 @@ test.describe('Products API', () => {
         expect(body.responseCode).toBe(200);
         expect(body.brands).toBeDefined();
         expect(body.brands.length).toBeGreaterThan(0);
+        
     });
 
     test('POST Search Product - should return matching products', async ({ request }) => {
@@ -41,6 +42,7 @@ test.describe('Products API', () => {
         expect(body.responseCode).toBe(200);
         expect(body.products.length).toBeGreaterThan(0);
         expect(body.products[0].name).toContain('Blue Top');
+        console.log(response.headers())
     });
 
     test('PUT To All Brands List - should return 405 Method Not Allowed', async ({ request }) => {
