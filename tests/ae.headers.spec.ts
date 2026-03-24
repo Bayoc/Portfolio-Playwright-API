@@ -8,13 +8,11 @@ function assertSecurityHeaders(headers: Record<string, string>) {
 
 test.describe('Headers tests', () => {
 
-
     test('GET All Products - should return correct security headers', async ({ request }) => {
         const response = await request.get('/api/productsList');
         const headers = response.headers();
-        // Content header test
-        expect(headers['content-type']).toContain('text/html');
 
+        expect(headers['content-type']).toContain('text/html');
         assertSecurityHeaders(headers);
     });
 
@@ -28,7 +26,6 @@ test.describe('Headers tests', () => {
         });
         const headers = response.headers();
         expect(headers['content-type']).toContain('text/html');
-
         assertSecurityHeaders(headers);
 
     });
@@ -36,7 +33,6 @@ test.describe('Headers tests', () => {
     test('PUT Brands List - should return security headers even on 405', async ({ request }) => {
         const response = await request.put('/api/brandsList');
         const headers = response.headers();
-
         assertSecurityHeaders(headers);
     });
 

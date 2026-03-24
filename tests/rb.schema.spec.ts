@@ -13,14 +13,10 @@ test.describe('Restful Booker - Schema Validation', () => {
         const idsResponse = await request.get(`${RB_URL}/booking`);
         const ids = await idsResponse.json();
         const firstId = ids[0].bookingid;
-
         const response = await request.get(`${RB_URL}/booking/${firstId}`);
         const body = await response.json();
-
         const validate = ajv.compile(bookingSchema);
-
         const valid = validate(body);
-
         expect(valid, JSON.stringify(validate.errors)).toBe(true);
     });
 
@@ -28,7 +24,6 @@ test.describe('Restful Booker - Schema Validation', () => {
     test('GET BookingIds - response matches schema', async ({ request }) => {
         const response = await request.get(`${RB_URL}/booking`);
         const body = await response.json();
-
         const validate = ajv.compile(bookingIdsSchema);
         const valid = validate(body);
         expect(valid, JSON.stringify(validate.errors)).toBe(true);

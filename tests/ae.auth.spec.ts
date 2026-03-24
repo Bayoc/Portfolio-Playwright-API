@@ -15,7 +15,7 @@ test.describe('Login API', () => {
         expect(response.status()).toBe(200);
 
         const body = await response.json();
-        expect(body.responseCode).toBe(200);
+        expect(body.responseCode).toBe(200);  // wywalić to do odzielnych plikow z asercjami
         expect(body.message).toBe('User exists!');
     });
 
