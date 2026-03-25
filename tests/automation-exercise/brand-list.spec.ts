@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { ENDPOINTS, HttpMethod } from '../../data/endpoints';
-import { expectMethodNotSupported } from '../../helpers/api-helpers';
+import { ENDPOINTS, HttpMethod } from '../../data/automation-exercises/endpoints';
+import { expectMethodNotSupported } from '../../helpers/automation-exercises/api-helpers';
 
 
 test.describe('GET /api/brandsList - Brands Collection', () => {

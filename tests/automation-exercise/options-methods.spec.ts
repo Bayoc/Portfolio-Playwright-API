@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { ENDPOINTS } from '../../data/endpoints';
+import { ENDPOINTS } from '../../data/automation-exercises/endpoints';
 
 test.describe('Security & HTTP Methods', () => {
 
