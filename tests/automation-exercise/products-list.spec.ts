@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { ENDPOINTS } from '../../data/endpoints';
+import { ENDPOINTS, HttpMethod } from '../../data/endpoints';
 import { expectMethodNotSupported } from '../../helpers/api-helpers';
 
 test.describe('GET /api/productsList - Products Collection', () => {
@@ -18,7 +18,7 @@ test.describe('GET /api/productsList - Products Collection', () => {
 
     test.describe('Negative Scenarios', () => {
 
-        const unsupportedMethods = ['POST', 'PUT', 'DELETE'];
+        const unsupportedMethods = [HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE];
 
         for (const method of unsupportedMethods) {
 
