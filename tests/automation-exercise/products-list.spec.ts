@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { ENDPOINTS } from '../../data/endpoints';
+import { expectMethodNotSupported } from '../../helpers/api-helpers';
 
 test.describe('GET /api/productsList - Products Collection', () => {
 
@@ -23,14 +24,8 @@ test.describe('GET /api/productsList - Products Collection', () => {
 
             test(`should return 200 but contain 405 in body when using ${method} method`, async ({ request }) => {
 
-                const response = await request.fetch(ENDPOINTS.AE.PRODUCTS_LIST, {
-                    method: method
-                });
-
-                expect(response.status()).toBe(200);
-                const body = await response.json();
-                expect(body.responseCode).toBe(405);
-                expect(body.message).toBe('This request method is not supported.');
+                const response = await request.fetch(ENDPOINTS.AE.PRODUCTS_LIST, { method: method });
+                await expectMethodNotSupported(response);
             });
         }
 
@@ -38,10 +33,7 @@ test.describe('GET /api/productsList - Products Collection', () => {
             test.fail(true, 'BUG-123: Inconsistent error handling for PATCH');
 
             const response = await request.fetch(ENDPOINTS.AE.PRODUCTS_LIST, { method: 'PATCH' });
-            expect(response.status()).toBe(200);
-            const body = await response.json();
-            expect(body.responseCode).toBe(405);
-            expect(body.message).toBe('This request method is not supported.');
+            await expectMethodNotSupported(response);
         });
     });
 
