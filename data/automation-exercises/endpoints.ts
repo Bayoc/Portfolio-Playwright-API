@@ -9,13 +9,6 @@ export const ENDPOINTS = {
         UPDATE_ACCOUNT: '/api/updateAccount',
         USER_DETAIL_BY_EMAIL: '/api/getUserDetailByEmail'
     },
-    RB: {
-        // tu później dodasz endpointy dla Restful-Booker
-        CREATE_TOKEN: '/auth',
-        BOOKING: '/booking',
-        BOOKING_ID: '/booking/:id',
-        PING: '/ping'
-    }
 };
 
 export enum HttpMethod {

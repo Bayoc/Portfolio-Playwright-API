@@ -12,5 +12,5 @@
     "tests/**/*.ts",
     "api/**/*.ts",
     "*.ts"
-  ]
+, "data/automation-exercises/types.ts"  ]
 }

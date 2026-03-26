@@ -1,5 +1,6 @@
 import { expect, APIResponse } from '@playwright/test';
 import { HttpMethod } from '../../data/automation-exercises/endpoints';
+import { test } from '@playwright/test';
 
 export async function expectMethodNotSupported(response: APIResponse) {
     expect(response.status()).toBe(200);
@@ -16,9 +17,6 @@ export async function expectEmptyProductsList(response: APIResponse) {
     expect(body.products).toBeDefined();
     expect(body.products).toHaveLength(0);
 }
-
-import { test } from '@playwright/test';
-// upewnij się, że masz zaimportowaną tu też swoją funkcję expectMethodNotSupported
 
 export function generateUnsupportedMethodsTests(endpoint: string, methodsToTest: string[]) {
     test.describe('Automated Unsupported Methods Scenarios', () => {
@@ -39,3 +37,16 @@ export function generateUnsupportedMethodsTests(endpoint: string, methodsToTest:
         });
     });
 }
+
+export function generateNativeUnsupportedMethodsTests(endpoint: string, methodsToTest: HttpMethod[]) {
+    test.describe('Automated Unsupported Methods Scenarios', () => {
+
+        for (const method of methodsToTest) {
+            test(`should return 405 method not allowed when using ${method} method`, async ({ request }) => {
+                const response = await request.fetch(endpoint, { method: method, data: '' });
+                expect(response.status()).toBe(405);
+            });
+        }
+    });
+}
+

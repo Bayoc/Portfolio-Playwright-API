@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { ENV } from '../playwright.config';
-import { UserAccount } from '../types';
+import { UserAccount } from '../data/automation-exercises/types';
 
 test.describe('Login API', () => {
 

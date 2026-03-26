@@ -3,7 +3,7 @@ import { ENDPOINTS, HttpMethod } from '../../data/automation-exercises/endpoints
 import { expectEmptyProductsList, generateUnsupportedMethodsTests } from '../../helpers/automation-exercises/api-helpers';
 import { searchEdgeCasesData } from '../../data/automation-exercises/search.data';
 
-test.describe('POST Search Product API', () => {
+test.describe('POST /api/searchProduct', () => {
 
     test.describe('Positive Scenarios', () => {
 
