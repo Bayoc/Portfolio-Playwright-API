@@ -69,7 +69,7 @@ test.describe('Login API', () => {
         };
 
         const response = await request.post('/api/createAccount', {
-            form: testUser as Record<string, string>
+            form: testUser
         });
 
         expect(response.status()).toBe(200);

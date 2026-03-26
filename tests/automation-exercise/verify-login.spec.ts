@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { ENV } from '../../playwright.config';
 import { ENDPOINTS, HttpMethod } from '../../data/automation-exercises/endpoints';
-import {  generateUnsupportedMethodsTests } from '../../helpers/automation-exercises/api-helpers';
+import { generateUnsupportedMethodsTests } from '../../helpers/automation-exercises/api-helpers';
 
 test.describe('POST /api/verifyLogin', () => {
 
@@ -47,6 +47,7 @@ test.describe('POST /api/verifyLogin', () => {
             expect(body.responseCode).toBe(400);
             expect(body.message).toBe('Bad request, email or password parameter is missing in POST request.');
         });
+
 
         generateUnsupportedMethodsTests(ENDPOINTS.AE.VERIFY_LOGIN, [HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE]);
     });

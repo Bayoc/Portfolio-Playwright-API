@@ -34,7 +34,6 @@ test.describe('POST Search Product API', () => {
             expect(body.message).toBe('Bad request, search_product parameter is missing in POST request.');
         });
 
-        // Unsuported method funcion
         generateUnsupportedMethodsTests(ENDPOINTS.AE.SEARCH_PRODUCT, [HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE]);
 
     });

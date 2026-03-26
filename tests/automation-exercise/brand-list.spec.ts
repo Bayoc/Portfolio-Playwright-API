@@ -18,7 +18,6 @@ test.describe('GET /api/brandsList - Brands Collection', () => {
     });
 
     test.describe('Negative Scenarios', () => {
-        // Unsuported method funcion 
         generateUnsupportedMethodsTests(ENDPOINTS.AE.BRANDS_LIST, [HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE]);
     });
 
