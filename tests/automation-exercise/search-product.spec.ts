@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { ENDPOINTS, HttpMethod } from '../../data/automation-exercises/endpoints';
-import { expectEmptyProductsList, expectMethodNotSupported } from '../../helpers/automation-exercises/api-helpers';
+import { expectEmptyProductsList, generateUnsupportedMethodsTests } from '../../helpers/automation-exercises/api-helpers';
 import { searchEdgeCasesData } from '../../data/automation-exercises/search.data';
 
 test.describe('POST Search Product API', () => {
@@ -34,28 +34,23 @@ test.describe('POST Search Product API', () => {
             expect(body.message).toBe('Bad request, search_product parameter is missing in POST request.');
         });
 
-        const unsupportedMethods = [HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE];
+        // Unsuported method funcion
+        generateUnsupportedMethodsTests(ENDPOINTS.AE.SEARCH_PRODUCT, [HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE]);
 
-        for (const method of unsupportedMethods) {
-            test(`should return 200 but contain 405 in body when using ${method} method`, async ({ request }) => {
-                const response = await request.fetch(ENDPOINTS.AE.SEARCH_PRODUCT, { method: method, data: '' }); //timeout protection with empty data
-                await expectMethodNotSupported(response);
+    });
+
+    test.describe('Edge Cases & Unusual Inputs', () => {
+
+        for (const { term, description } of searchEdgeCasesData) {
+
+            test(`should handle search with ${description} safely`, async ({ request }) => {
+                const response = await request.post(ENDPOINTS.AE.SEARCH_PRODUCT, {
+                    form: {
+                        search_product: term
+                    }
+                });
+                await expectEmptyProductsList(response);
             });
         }
-
-        test.describe('Edge Cases & Unusual Inputs', () => {
-
-            for (const { term, description } of searchEdgeCasesData) {
-
-                test(`should handle search with ${description} safely`, async ({ request }) => {
-                    const response = await request.post(ENDPOINTS.AE.SEARCH_PRODUCT, {
-                        form: {
-                            search_product: term
-                        }
-                    });
-                   await expectEmptyProductsList(response);
-                });
-            }
-        });
     });
 });

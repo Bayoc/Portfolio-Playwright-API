@@ -42,7 +42,6 @@ test.describe('Login API', () => {
         });
 
         expect(response.status()).toBe(200);
-
         const body = await response.json();
         expect(body.responseCode).toBe(400);
         expect(body.message).toBe('Bad request, email or password parameter is missing in POST request.');
@@ -124,7 +123,7 @@ test.describe('Login API', () => {
         };
 
         const response = await request.put('/api/updateAccount', {
-            form: user as Record<string, string>
+            form: user 
         });
 
         expect(response.status()).toBe(200);

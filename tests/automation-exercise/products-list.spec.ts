@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { ENDPOINTS, HttpMethod } from '../../data/automation-exercises/endpoints';
-import { expectMethodNotSupported } from '../../helpers/automation-exercises/api-helpers';
+import { generateUnsupportedMethodsTests } from '../../helpers/automation-exercises/api-helpers';
 
 test.describe('GET /api/productsList - Products Collection', () => {
 
@@ -17,25 +17,10 @@ test.describe('GET /api/productsList - Products Collection', () => {
     });
 
     test.describe('Negative Scenarios', () => {
-
-        const unsupportedMethods = [HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE];
-
-        for (const method of unsupportedMethods) {
-
-            test(`should return 200 but contain 405 in body when using ${method} method`, async ({ request }) => {
-
-                const response = await request.fetch(ENDPOINTS.AE.PRODUCTS_LIST, { method: method });
-                await expectMethodNotSupported(response);
-            });
-        }
-
-        test('should return 200 and JSON 405 for PATCH (Currently BUGGED)', async ({ request }) => {
-            test.fail(true, 'BUG-123: Inconsistent error handling for PATCH');
-
-            const response = await request.fetch(ENDPOINTS.AE.PRODUCTS_LIST, { method: 'PATCH' });
-            await expectMethodNotSupported(response);
-        });
+        // Unsuported method funcion
+        generateUnsupportedMethodsTests(ENDPOINTS.AE.PRODUCTS_LIST, [HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE]);
     });
+
 
     test.describe('Edge Cases & Unexpected Inputs', () => {
 

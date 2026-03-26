@@ -1,5 +1,4 @@
-export interface UserAccount {
-    [key: string]: string | number | boolean | undefined;
+export type UserAccount {
     name: string;
     email: string;
     password: string;
@@ -9,9 +8,9 @@ export interface UserAccount {
     birth_year: string;
     firstname: string;
     lastname: string;
-    company?: string;
+    company: string;
     address1: string;
-    address2?: string;
+    address2: string;
     country: string;
     zipcode: string;
     state: string;
