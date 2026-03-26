@@ -32,4 +32,21 @@ test.describe('GET /api/productsList - Products Collection', () => {
         });
     });
 
+    test.describe('Security & HTTP Methods', () => {
+
+        test('should return correct allowed methods in OPTIONS request', async ({ request }) => {
+            const response = await request.fetch(ENDPOINTS.AE.PRODUCTS_LIST, { method: 'OPTIONS' });
+
+            expect(response.status()).toBe(200);
+            const allowedMethods = response.headers()['allow'];
+            expect(allowedMethods).toBeDefined();
+
+            expect(allowedMethods).toContain(HttpMethod.GET);
+            expect(allowedMethods).toContain(HttpMethod.POST);
+            expect(allowedMethods).toContain(HttpMethod.PUT);
+            expect(allowedMethods).toContain(HttpMethod.OPTIONS);
+
+            expect(allowedMethods).not.toContain(HttpMethod.PATCH);
+        });
+    });
 });
