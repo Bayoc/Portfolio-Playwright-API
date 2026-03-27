@@ -1,5 +1,6 @@
 import { APIRequestContext } from '@playwright/test';
-import { RB_URL } from '../tests/fixtures';
+import { RB_URL } from './fixtures';
+import { ENDPOINTS } from '../../data/restful-booker/endpoints';
 
 export const DEFAULT_BOOKING_DATA = {
     firstname: 'Baio',
@@ -24,7 +25,7 @@ export class BookingClient {
     constructor(private request: APIRequestContext) {}
 
     async createBooking(data = DEFAULT_BOOKING_DATA) {
-        const response = await this.request.post(`${RB_URL}/booking`, { data });
+        const response = await this.request.post(`${RB_URL}${ENDPOINTS.RB.BOOKING}`, { data });
         const body = await response.json();
         return body.bookingid as number;
     }

@@ -34,28 +34,11 @@ export const bookingIdsSchema = {
 
 export const createBookingSchema = {
     type: 'object',
-    required: ['bookingid'],
+    required: ['bookingid', 'booking'],
     properties: {
         bookingid: { type: 'number' },
-        booking: {
-            type: 'object',
-            required: ['firstname', 'lastname', 'totalprice', 'depositpaid', 'bookingdates'],
-            properties: {
-                firstname: { type: 'string' },
-                lastname: { type: 'string' },
-                totalprice: { type: 'number' },
-                depositpaid: { type: 'boolean' },
-                bookingdates: {
-                    type: 'object',
-                    required: ['checkin', 'checkout'],
-                    properties: {
-                        checkin: { type: 'string' },
-                        checkout: { type: 'string' }
-                    }
-                },
-                additionalneeds: { type: 'string' }
-            }
-        }
+        booking: bookingSchema
     },
+
     additionalProperties: false
 };

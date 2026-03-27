@@ -15,6 +15,8 @@ export const ENV = {
     registerPassword: process.env.TEST_REGISTER_PASSWORD as string,
     toDeleteEmail: process.env.TEST_TODELETE_EMAIL as string,
     toDeletePassword: process.env.TEST_TODELETE_PASSWORD as string,
+    rbAdminLogin: process.env.RB_ADMIN_LOGIN as string,
+    rbAdminPassword: process.env.RB_ADMIN_PASSWORD as string,
 };
 
 export default defineConfig({

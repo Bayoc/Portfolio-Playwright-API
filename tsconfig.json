@@ -12,5 +12,5 @@
     "tests/**/*.ts",
     "api/**/*.ts",
     "*.ts"
-, "data/automation-exercises/types.ts"  ]
+, "data/automation-exercises/types.ts", "data/restful-booker/schemas.ts", "data/restful-booker/fixtures.ts"  ]
 }

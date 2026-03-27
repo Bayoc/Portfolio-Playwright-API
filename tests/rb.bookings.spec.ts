@@ -1,5 +1,5 @@
-import { test, expect, RB_URL } from './fixtures';
-import { BookingClient, authHeaders, DEFAULT_BOOKING_DATA } from '../api/rb.booking.client';
+import { test, expect, RB_URL } from '../data/restful-booker/fixtures';
+import { BookingClient, authHeaders, DEFAULT_BOOKING_DATA } from '../data/restful-booker/booking-data';
 
 
 test.describe('Restful Booker Api', () => {

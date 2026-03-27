@@ -1,6 +1,6 @@
-import { test, expect, RB_URL } from './fixtures';
+import { test, expect, RB_URL } from '../data/restful-booker/fixtures';
 import Ajv from 'ajv';
-import { createBookingSchema, bookingIdsSchema, bookingSchema } from '../api/schemas';
+import { createBookingSchema, bookingIdsSchema, bookingSchema } from '../data/restful-booker/schemas';
 import { BookingClient, authHeaders, DEFAULT_BOOKING_DATA } from '../api/rb.booking.client';
 
 
