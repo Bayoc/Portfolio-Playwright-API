@@ -1,4 +1,6 @@
 import { test as base, request as baseRequest } from '@playwright/test';
+import { ENV } from '../../playwright.config';
+
 
 const RB_URL = 'https://restful-booker.herokuapp.com';
 
@@ -11,8 +13,8 @@ export const test = base.extend<RbFixtures>({
         const context = await baseRequest.newContext();
         const response = await context.post(`${RB_URL}/auth`, {
             data: {
-                username: 'admin',
-                password: 'password123'
+                username: ENV.rbAdminLogin,
+                password: ENV.rbAdminPassword
             }
         });
         const body = await response.json();

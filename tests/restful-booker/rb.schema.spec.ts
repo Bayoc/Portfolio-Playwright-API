@@ -1,8 +1,8 @@
-import { test, expect, RB_URL } from '../data/restful-booker/fixtures';
+import { test, expect, RB_URL } from '../../data/restful-booker/fixtures';
 import Ajv from 'ajv';
-import { createBookingSchema, bookingIdsSchema, bookingSchema } from '../data/restful-booker/schemas';
-import { BookingClient, authHeaders, DEFAULT_BOOKING_DATA } from '../api/rb.booking.client';
-
+import { createBookingSchema, bookingIdsSchema, bookingSchema } from '../../data/restful-booker/schemas';
+import { DEFAULT_BOOKING_DATA } from '../../data/restful-booker/booking-data';
+import { BookingClient, authHeaders} from '../../helpers/restful-booker/api-helpers';
 
 const ajv = new Ajv();
 
