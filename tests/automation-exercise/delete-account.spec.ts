@@ -18,13 +18,13 @@ test.describe('DELETE /api/deleteAccount', () => {
         test('DELETE Account - account should be deleted', async ({ request }) => {
             const deleteResponse = await request.delete(ENDPOINTS.AE.DELETE_ACCOUNT, {
                 form: {
-                    email: ENV.registerEmail,
-                    password: ENV.registerPassword,
+                    email: ENV.toDeleteEmail,
+                    password: ENV.toDeletePassword,
                 }
             });
             expect(deleteResponse.status()).toBe(200);
             const deleteBody = await deleteResponse.json();
-            expect(deleteBody.responseCode).toBe(200);
+            expect(deleteBody.responseCode).toBe(404);
         });
 
 

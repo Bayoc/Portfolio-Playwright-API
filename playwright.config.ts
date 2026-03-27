@@ -13,6 +13,8 @@ export const ENV = {
     password: process.env.TEST_USER_PASSWORD as string,
     registerEmail: process.env.TEST_REGISTER_EMAIL as string,
     registerPassword: process.env.TEST_REGISTER_PASSWORD as string,
+    toDeleteEmail: process.env.TEST_TODELETE_EMAIL as string,
+    toDeletePassword: process.env.TEST_TODELETE_PASSWORD as string,
 };
 
 export default defineConfig({

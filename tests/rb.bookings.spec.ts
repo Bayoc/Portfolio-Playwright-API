@@ -66,7 +66,6 @@ test.describe('Restful Booker Api', () => {
         expect(body.booking).toHaveProperty('firstname');
         expect(body.booking).toHaveProperty('lastname');
         expect(body.booking).toHaveProperty('totalprice');
-        console.log(body);
     });
 
     test('PUT UpdateBooking - should update booking', async ({ request, rbToken }) => {
@@ -88,7 +87,6 @@ test.describe('Restful Booker Api', () => {
         expect(response.status()).toBe(200);
         const body = await response.json();
         expect(body.lastname).toBe('Updated');
-        console.log(body);
     });
 
     test('DELETE booking - booking should be deleted', async ({ request, rbToken }) => {
