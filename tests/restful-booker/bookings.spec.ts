@@ -1,6 +1,6 @@
 import { test, expect, RB_URL } from '../../data/restful-booker/fixtures';
 import { ENDPOINTS } from '../../data/restful-booker/endpoints';
-import { DEFAULT_BOOKING_DATA } from '../../data/restful-booker/booking-data';
+import { DEFAULT_BOOKING_DATA } from '../../data/restful-booker/booking.data';
 import { BookingClient, authHeaders} from '../../helpers/restful-booker/api-helpers';
 
 test.describe('GET /booking', () => {

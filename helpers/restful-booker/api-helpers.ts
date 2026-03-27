@@ -1,7 +1,7 @@
 import { APIRequestContext } from '@playwright/test';
 import { RB_URL } from '../../data/restful-booker/fixtures';
 import { ENDPOINTS } from '../../data/restful-booker/endpoints';
-import { DEFAULT_BOOKING_DATA } from '../../data/restful-booker/booking-data';
+import { DEFAULT_BOOKING_DATA } from '../../data/restful-booker/booking.data';
 
 export const authHeaders = (token: string) => ({
     'Cookie': `token=${token}`,
