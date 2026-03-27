@@ -50,3 +50,9 @@ export function generateNativeUnsupportedMethodsTests(endpoint: string, methodsT
     });
 }
 
+export function assertSecurityHeaders(headers: Record<string, string>) {
+    expect(headers['x-frame-options']).toBe('DENY');
+    expect(headers['x-content-type-options']).toBe('nosniff');
+    expect(headers['referrer-policy']).toBe('same-origin');
+}
+

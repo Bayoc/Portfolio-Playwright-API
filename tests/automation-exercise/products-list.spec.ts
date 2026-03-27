@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { ENDPOINTS, HttpMethod } from '../../data/automation-exercises/endpoints';
-import { generateUnsupportedMethodsTests } from '../../helpers/automation-exercises/api-helpers';
+import { generateUnsupportedMethodsTests, assertSecurityHeaders } from '../../helpers/automation-exercises/api-helpers';
 
 test.describe('GET /api/productsList - Products Collection', () => {
 
@@ -14,6 +14,7 @@ test.describe('GET /api/productsList - Products Collection', () => {
             expect(body.products).toBeDefined();
             expect(body.products.length).toBeGreaterThan(0);
         });
+
     });
 
     test.describe('Negative Scenarios', () => {
@@ -47,6 +48,13 @@ test.describe('GET /api/productsList - Products Collection', () => {
             expect(allowedMethods).toContain(HttpMethod.OPTIONS);
 
             expect(allowedMethods).not.toContain(HttpMethod.PATCH);
+        });
+
+        test('GET All Products - should return correct security headers', async ({ request }) => {
+            const response = await request.get(ENDPOINTS.AE.PRODUCTS_LIST);
+            const headers = response.headers();
+            expect(headers['content-type']).toContain('text/html');
+            assertSecurityHeaders(headers);
         });
     });
 });

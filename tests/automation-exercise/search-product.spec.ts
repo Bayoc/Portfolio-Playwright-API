@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { ENDPOINTS, HttpMethod } from '../../data/automation-exercises/endpoints';
-import { expectEmptyProductsList, generateUnsupportedMethodsTests } from '../../helpers/automation-exercises/api-helpers';
+import { expectEmptyProductsList, generateUnsupportedMethodsTests, assertSecurityHeaders } from '../../helpers/automation-exercises/api-helpers';
 import { searchEdgeCasesData } from '../../data/automation-exercises/search.data';
 
 test.describe('POST /api/searchProduct', () => {
@@ -20,6 +20,7 @@ test.describe('POST /api/searchProduct', () => {
             expect(body.products.length).toBeGreaterThan(0);
             expect(body.products[0].name).toContain('Blue Top');
         });
+
     });
 
     test.describe('Negative Scenarios', () => {
@@ -51,5 +52,20 @@ test.describe('POST /api/searchProduct', () => {
                 await expectEmptyProductsList(response);
             });
         }
+    });
+
+    test.describe('Secutity Headers', () => {
+
+        test('POST Search Product - should return correct security headers', async ({ request }) => {
+
+            const response = await request.post(ENDPOINTS.AE.SEARCH_PRODUCT, {
+                form: {
+                    search_product: 'Blue Top'
+                }
+            });
+            const headers = response.headers();
+            expect(headers['content-type']).toContain('text/html');
+            assertSecurityHeaders(headers);
+        });
     });
 });

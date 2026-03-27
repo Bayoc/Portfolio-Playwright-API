@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { ENDPOINTS, HttpMethod } from '../../data/automation-exercises/endpoints';
-import { generateUnsupportedMethodsTests } from '../../helpers/automation-exercises/api-helpers';
+import { generateUnsupportedMethodsTests, assertSecurityHeaders } from '../../helpers/automation-exercises/api-helpers';
 
 
 test.describe('GET /api/brandsList - Brands Collection', () => {
@@ -21,5 +21,11 @@ test.describe('GET /api/brandsList - Brands Collection', () => {
         generateUnsupportedMethodsTests(ENDPOINTS.AE.BRANDS_LIST, [HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE]);
     });
 
-
+    test.describe('Security Headers', () => {
+        test('PUT Brands List - should return security headers even on 405', async ({ request }) => {
+            const response = await request.put(ENDPOINTS.AE.BRANDS_LIST);
+            const headers = response.headers();
+            assertSecurityHeaders(headers);
+        });
+    });
 });
