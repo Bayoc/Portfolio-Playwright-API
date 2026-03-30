@@ -24,6 +24,10 @@ jobs:
         TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
         TEST_REGISTER_EMAIL: ${{ secrets.TEST_REGISTER_EMAIL }}
         TEST_REGISTER_PASSWORD: ${{ secrets.TEST_REGISTER_PASSWORD }}
+        TEST_TODELETE_EMAIL: ${{ secrets.TEST_TODELETE_EMAIL }}
+        TEST_TODELETE_PASSWORD: ${{ secrets.TEST_TODELETE_PASSWORD }}
+        RB_ADMIN_LOGIN: ${{ secrets.RB_ADMIN_LOGIN }}
+        RB_ADMIN_PASSWORD: ${{ secrets.RB_ADMIN_PASSWORD }}
 
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
